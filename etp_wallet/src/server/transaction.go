@@ -52,9 +52,6 @@ func Transction()  {
 
 		//RpcApi.RpcApi(id,method,)
 
-
-
-
 }
 
 
