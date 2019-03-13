@@ -3,8 +3,8 @@ package mysql
 import (
 	"database/sql"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"strings"
-	_"github.com/go-sql-driver/mysql"
 )
 
 //数据库配置
@@ -19,7 +19,7 @@ const (
 
 var DB *sql.DB
 //args ...string
-func InitDB(address string,asset string,inuse string)  {
+func InitDB(method string,args ...string)  {
 	//构建连接："用户名:密码@tcp(IP:端口)/数据库?charset=utf8"
 	path := strings.Join([]string{userName, ":", password, "@tcp(",ip, ":", port, ")/", dbName, "?charset=utf8"}, "")
 
@@ -36,8 +36,18 @@ func InitDB(address string,asset string,inuse string)  {
 	}
 
 	//defer DB.Close()
-//
-	Insert(DB,address,asset,inuse)
+	method_type := method
+
+	switch method_type {
+	case "getnewaddress":
+		Insert_addr(DB,args[0],args[1],args[2])
+	case "getheight":
+		Update_height(DB,args[0],args[1])
+	case "sendfrom":
+		Insert_tran(DB,args[0],args[1],args[2])
+	}
+	
+
 
 
 	fmt.Println("connnect success")
@@ -50,7 +60,40 @@ func InitDB(address string,asset string,inuse string)  {
 
 //address string,asset string
 
-func Insert(DB *sql.DB,address string,asset string,inuse string) {
+func Insert_addr(DB *sql.DB,address string,asset string,inuse string) {
+
+	stmt, err := DB.Prepare("INSERT address SET address=?,asset=?,inuse=?")
+	res, err := stmt.Exec(address,asset,inuse)
+	if err != nil {
+		fmt.Println("数据库执行插入出错", err)
+		return
+	}
+	rowsaffected, err := res.RowsAffected()
+	if err != nil {
+
+	}
+	fmt.Println("共计", rowsaffected, "行受到影响")
+
+}
+
+func Update_height(DB *sql.DB,height string,asset string) {
+
+	stmt, err := DB.Prepare("Update last_height SET height=? where asset=?")
+	res, err := stmt.Exec(height,asset)
+		if err != nil {
+		fmt.Println("数据库执行插入出错", err)
+		return
+	}
+	rowsaffected, err := res.RowsAffected()
+	if err != nil {
+
+	}
+	fmt.Println("共计", rowsaffected, "行受到影响")
+
+}
+
+
+func Insert_tran(DB *sql.DB,address string,asset string,inuse string) {
 
 	stmt, err := DB.Prepare("INSERT test SET address=?,asset=?,inuse=?")
 	res, err := stmt.Exec(address,asset,inuse)
@@ -65,6 +108,9 @@ func Insert(DB *sql.DB,address string,asset string,inuse string) {
 	fmt.Println("共计", rowsaffected, "行受到影响")
 
 }
+
+
+
 
 func Update(DB *sql.DB,address string,asset string,inuse string) {
 

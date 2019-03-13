@@ -27,6 +27,5 @@ func Connetc_etp(Request string) []string{
 	buf := strings.Fields(Body_info)
 	return buf
 
-
 }
 

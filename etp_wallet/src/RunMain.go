@@ -1,6 +1,9 @@
 package main
 
-import "server"
+import (
+	"server"
+	"time"
+)
 
 func main()  {
 
@@ -8,7 +11,17 @@ func main()  {
 
 	//RpcApi.RpcApi("1","sendfrom","something")
 
+	//交易
 	//server.Transction()
-	server.Address()
+
+
+	//生成地址
+	//server.Address()
+
+	//获取最新块高,更新数据库高度
+	for range time.Tick(time.Millisecond*100){
+		server.GetLastBlock()
+	}
+
 
 }

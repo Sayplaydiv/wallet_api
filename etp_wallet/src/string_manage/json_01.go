@@ -11,7 +11,6 @@ func Json01(Str string) string{
 	return json_2
 }
 
-
 func Json02(Str string) string{
 
 	json_0 := "\""+ Str + "\""
