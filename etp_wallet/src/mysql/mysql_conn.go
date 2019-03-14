@@ -45,6 +45,8 @@ func InitDB(method string,args ...string)  {
 		Update_height(DB,args[0],args[1])
 	case "sendfrom":
 		Insert_tran(DB,args[0],args[1],args[2])
+	case "getblock":
+		Select_tran(DB,args[0])
 	}
 	
 
@@ -81,7 +83,7 @@ func Update_height(DB *sql.DB,height string,asset string) {
 	stmt, err := DB.Prepare("Update last_height SET height=? where asset=?")
 	res, err := stmt.Exec(height,asset)
 		if err != nil {
-		fmt.Println("数据库执行插入出错", err)
+		fmt.Println("数据库执行更新出错", err)
 		return
 	}
 	rowsaffected, err := res.RowsAffected()
@@ -110,37 +112,22 @@ func Insert_tran(DB *sql.DB,address string,asset string,inuse string) {
 }
 
 
+func Select_tran(DB *sql.DB,asset string) {
 
-
-func Update(DB *sql.DB,address string,asset string,inuse string) {
-
-	stmt, err := DB.Prepare("Update test SET address=?,asset=?,inuse=?")
-	res, err := stmt.Exec(address,asset,inuse)
+	stmt, err := DB.Prepare("select height from height_status where asset=?")
+	res, err := stmt.Exec(asset)
 	if err != nil {
-		fmt.Println("数据库执行插入出错", err)
+		fmt.Println("数据库执行查询出错", err)
 		return
 	}
-	rowsaffected, err := res.RowsAffected()
-	if err != nil {
 
-	}
-	fmt.Println("共计", rowsaffected, "行受到影响")
+
+	fmt.Println("共计",res )
 
 }
 
 
-func Query(DB *sql.DB,address string,asset string,inuse string) {
 
-	stmt, err := DB.Prepare("Update test SET address=?,asset=?,inuse=?")
-	res, err := stmt.Exec(address,asset,inuse)
-	if err != nil {
-		fmt.Println("数据库执行插入出错", err)
-		return
-	}
-	rowsaffected, err := res.RowsAffected()
-	if err != nil {
 
-	}
-	fmt.Println("共计", rowsaffected, "行受到影响")
 
-}
+

@@ -1,9 +1,6 @@
 package main
 
-import (
-	"server"
-	"time"
-)
+import "mysql"
 
 func main()  {
 
@@ -19,9 +16,13 @@ func main()  {
 	//server.Address()
 
 	//获取最新块高,更新数据库高度
-	for range time.Tick(time.Millisecond*100){
-		server.GetLastBlock()
-	}
+	//for range time.Tick(time.Millisecond*100){
+	//	server.GetHeight()
+	//}
 
+	//扫区块获取交易
+
+
+	mysql.InitDB("getblock","etp")
 
 }
