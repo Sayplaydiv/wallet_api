@@ -8,6 +8,9 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
+	"string_manage"
+
+	//"reflect"
 	"strings"
 )
 
@@ -55,6 +58,9 @@ func InitDB(method string,args ...string) {
 		//height_status := Select_tran(args[0])
 		//return height_status
 	//	fmt.Println(height_status)
+	case "select_address":
+		Select_address(args[0])
+
 	}
 
 	fmt.Println("connnect success")
@@ -116,6 +122,18 @@ func Insert_tran(DB *sql.DB,address string,asset string,inuse string) {
 
 }
 
+func Select_address(address string) {
+
+	err := DB.QueryRow("select * from address where  address= ?", address)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+
+}
+
+
+
 func Select_tran(Asset string,id string,method string) {
 
 	var height string
@@ -124,15 +142,6 @@ func Select_tran(Asset string,id string,method string) {
 		log.Fatal(err)
 	}
 
-	//userName := string_manage.Json02("wangyaxing")
-	//passWord := string_manage.Json02("wang182323")
-	//account     := string_manage.Json02("test233")
-	//passWord    := string_manage.Json02("wang812323")
-	//amount   := string_manage.Json02("1000000")
-	//Params_0 :=[]string{account,passWord,}
-
-	//Params :=strings.Join(Params_0,", ")
-	//fmt.Print(Params)
 
 	Params := height
 
@@ -151,8 +160,51 @@ func Select_tran(Asset string,id string,method string) {
 
 		for i, data :=range  transaction{
 			fmt.Println(i,data)
-			fmt.Println(data)
+			data_ :=data.(map[string]interface{})
+			fmt.Println("===================当前扫描hash为================ \n ",data_["hash"],"\n=============================================\n")
 
+			id := "5"
+
+			method  := "gettx"
+
+			Params_0 := data_["hash"].(string)
+
+			Params := string_manage.Json02(Params_0)
+
+			Request := RpcApi.RpcApi(id,method,Params)
+
+			body_0 :=connect_etp.Connetc_etp(Request)
+
+			var dat_0 map[string]interface{}
+
+			if err := json.Unmarshal([]byte(body_0), &dat_0); err == nil {
+				fmt.Println("==============json str 转map=======================")
+				//fmt.Println(dat)
+				result := dat["result"].(map[string]interface{})
+				transaction :=result["transactions"].([]interface{})
+				for i, data :=range  transaction{
+					fmt.Println(i,data)
+					data_ :=data.(map[string]interface{})
+					fmt.Println("+++++++++++++",data_["outputs"],"++++++++++++++")
+					transaction_data :=data_["outputs"]
+					//to_address_1 :=to_address_0.(map[string]interface{})
+					//to_address_2 :=to_address_1["address"]
+					fmt.Println("--------------------",transaction_data,"--------------------")
+					transaction_data_0 :=transaction_data.([]interface{})
+					fmt.Println("xxxxxxxxxxxxxxxxxxxxxx",transaction_data_0,"xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+					for i, data := range  transaction_data_0{
+						if i ==1{
+							to_address_0 := data.(map[string]interface{})["address"]
+							to_address := to_address_0.(string)
+							InitDB("select_address",to_address)
+
+						}
+
+					}
+
+				}
+
+			}
 
 
 		}

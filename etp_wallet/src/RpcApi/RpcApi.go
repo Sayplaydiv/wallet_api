@@ -40,7 +40,7 @@ func RpcApi(Id string,Method string,Params string) string{
 	//Json :="{\"id\":\"1\",\"jsonrpc\":\"2.0\",\"method\":\"sendfrom\",params:[\"wangyaxing\",\"wang182323\",\"tPak5DS4aR577dAEtCUDMzvZe2RKzQticA\",\"MAGGFkPSCAW9ZhUzCbw61LGMfg5Ks8ASx6\",\"1000000\"]}"
 
 	//Json1 :="{\"id\":1, \"jsonrpc\":\"2.0\", \"method\":\"sendfrom\", \"params\":[\"wangyaxing\", \"wang182323\", \"tPak5DS4aR577dAEtCUDMzvZe2RKzQticA\", \"MAGGFkPSCAW9ZhUzCbw61LGMfg5Ks8ASx6\", \"10000\"]}"
-	fmt.Println(Json)
+	fmt.Println("请求json数据为：",Json)
 
 	//fmt.Println(Json1)
 
