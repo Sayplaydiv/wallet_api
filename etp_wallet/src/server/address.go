@@ -5,6 +5,8 @@ import (
 	"connect_etp"
 	"fmt"
 	"mysql"
+
+	//"mysql"
 	"string_manage"
 	"strings"
 )
@@ -25,22 +27,32 @@ func Address()  {
 	//fmt.Print(Params)
 	Request := RpcApi.RpcApi(id,method,Params)
 
-	Body_msg :=connect_etp.Connetc_etp(Request)
-
-	fmt.Println(Body_msg)
+	body :=connect_etp.Connetc_etp(Request)
 
 
-	for i,data :=range Body_msg{
+	Body_info := string(body)
+
+	fmt.Println("===========", Body_info)
+
+	//buf1 := json.Unmarshal(Body_info)
+	//buf := strings.Split(Body_info," , ")
+	buf := strings.Fields(Body_info)
+
+
+	for i, data :=range buf{
 
 		if i == 10 {
 			NewAddress := strings.Trim(data," \", ")
-
+			//fmt.Println(i,",",GetLastBlock)
 			fmt.Println(NewAddress)
 
 			mysql.InitDB("getnewaddress",NewAddress,"etp","1")
 
 		}
 	}
+
+
+
 
 
 

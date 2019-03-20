@@ -1,11 +1,7 @@
 package server
 
 import (
-	"RpcApi"
-	"connect_etp"
-	"fmt"
 	"mysql"
-	"strings"
 )
 
 func GetBlock()  {
@@ -25,27 +21,6 @@ func GetBlock()  {
 
 		//Params :=strings.Join(Params_0,", ")
 		//fmt.Print(Params)
-		Params := ""
-		Request := RpcApi.RpcApi(id,method,Params)
 
-		Body_msg :=connect_etp.Connetc_etp(Request)
-
-		fmt.Println(Body_msg)
-
-
-		for i,data :=range Body_msg{
-
-			if i == 9 {
-				GetLastBlock := strings.Trim(data," \", ")
-
-				//fmt.Println(i,",",GetLastBlock)
-
-				mysql.InitDB("getheight",GetLastBlock,"etp")
-
-			}
-		}
-
-
-
-
+		mysql.InitDB("getblock","etp",id,method)
 }

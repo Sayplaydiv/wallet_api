@@ -1,6 +1,6 @@
 package main
 
-import "mysql"
+import "server"
 
 func main()  {
 
@@ -21,8 +21,10 @@ func main()  {
 	//}
 
 	//扫区块获取交易
+	server.GetBlock()
 
 
-	mysql.InitDB("getblock","etp")
+	//数据库测试
+	//mysql.InitDB("getblock","etp")
 
 }
