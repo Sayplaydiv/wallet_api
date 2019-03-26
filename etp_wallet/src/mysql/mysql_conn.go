@@ -8,6 +8,7 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
+	"strconv"
 	"string_manage"
 
 	//"reflect"
@@ -60,9 +61,10 @@ func InitDB(method string,args ...string) {
 	//	fmt.Println(height_status)
 	case "select_address":
 		Select_address(args[0])
+	case "Insert_tx":
+		Insert_tx(DB,args[0],args[1],args[2],args[3])
 
 	}
-
 	fmt.Println("connnect success")
 
 }
@@ -105,6 +107,8 @@ func Update_height(DB *sql.DB,height string,asset string) {
 }
 
 
+
+
 func Insert_tran(DB *sql.DB,address string,asset string,inuse string) {
 
 
@@ -121,12 +125,30 @@ func Insert_tran(DB *sql.DB,address string,asset string,inuse string) {
 	fmt.Println("共计", rowsaffected, "行受到影响")
 
 }
+func Insert_tx(DB *sql.DB,to_address string,value string,hash string,tx_index string) {
+
+	stmt, err := DB.Prepare("INSERT deposit SET to=?,value=?,hash=?,tx_index=?")
+	res, err := stmt.Exec(to_address,value,hash,tx_index)
+	if err != nil {
+		fmt.Println("数据库执行插入出错", err)
+		return
+	}
+	rowsaffected, err := res.RowsAffected()
+	if err != nil {
+
+	}
+	fmt.Println("共计", rowsaffected, "行受到影响")
+
+}
+
 
 func Select_address(address string) {
 
-	err := DB.QueryRow("select * from address where  address= ?", address)
+	err:= DB.QueryRow("select * from address where  address= ?")
 	if err != nil {
 		log.Fatal(err)
+	}else {
+		fmt.Println("未找到")
 	}
 
 
@@ -196,8 +218,15 @@ func Select_tran(Asset string,id string,method string) {
 						if i ==1{
 							to_address_0 := data.(map[string]interface{})["address"]
 							to_address := to_address_0.(string)
-							InitDB("select_address",to_address)
-
+							tx_index_0 := data.(map[string]interface{})["index"]
+							tx_index_1 :=int(tx_index_0.(float64))
+							tx_index := strconv.Itoa(tx_index_1)
+							tx_value_0 := data.(map[string]interface{})["value"]
+							tx_value_1 :=int(tx_value_0.(float64))
+							tx_value :=strconv.Itoa(tx_value_1)
+							fmt.Println(to_address,tx_index,tx_value,Params_0)
+							inuse :=InitDB_select_address(to_address,tx_index,tx_value,Params_0)
+							fmt.Println(inuse)
 						}
 
 					}
