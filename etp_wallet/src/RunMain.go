@@ -15,16 +15,19 @@ func main()  {
 	//生成地址
 	//server.Address()
 
+	//创建信道
+	//complete := make(chan int)
+
+
 	//获取最新块高,更新数据库高度
-	//for range time.Tick(time.Millisecond*100){
-	//	server.GetHeight()
-	//}
+
+	  server.GetHeight()
+
 
 	//扫区块获取交易
-	server.GetBlock()
+	defer server.GetBlock()
 
-
-	//数据库测试
-	//mysql.InitDB("getblock","etp")
+	//数据库清除
+	//mysql.InitDB("delete","75")
 
 }

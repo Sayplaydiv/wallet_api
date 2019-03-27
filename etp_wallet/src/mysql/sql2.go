@@ -8,7 +8,7 @@ import (
 )
 
 //args ...string
-func InitDB_select_address(to_address string,tx_index string,tx_value string,hash string) {
+func InitDB_select_address(to_address string,tx_value string,hash string,tx_index string) {
 	//构建连接："用户名:密码@tcp(IP:端口)/数据库?charset=utf8"
 	path := strings.Join([]string{userName, ":", password, "@tcp(", ip, ":", port, ")/", dbName, "?charset=utf8"}, "")
 
@@ -23,6 +23,7 @@ func InitDB_select_address(to_address string,tx_index string,tx_value string,has
 		fmt.Println("opon database fail")
 		return
 	}
+	fmt.Println("connnect success")
 	fmt.Println(to_address)
 
 	rows, err := DB.Query("select * from address where  address=?", to_address)
@@ -38,12 +39,34 @@ func InitDB_select_address(to_address string,tx_index string,tx_value string,has
 		var create_time string
 		rows.Columns()
 		err = rows.Scan(&id, &address, &asset, &inuse, &create_time)
-		fmt.Println(inuse)
+		fmt.Println(id,address,asset,inuse,create_time)
+		if inuse == 1 {
+			fmt.Println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+			fmt.Println(to_address,tx_index,tx_value,hash)
+			fmt.Println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+			//Insert_all(DB,to_address,tx_index,tx_value,hash)
+
+				stmt, err := DB.Prepare("INSERT deposit SET  to_address =?,tx_value=?,tx_hash=?,tx_index=?")
+
+				res, err := stmt.Exec(to_address,tx_value,hash,tx_index)
+				if err != nil {
+					fmt.Println("数据库执行插入出错", err)
+					return
+				}
+				rowsaffected, err := res.RowsAffected()
+				if err != nil {
+
+				}
+				fmt.Println("共计", rowsaffected, "行受到影响")
 
 
 
-		fmt.Println("connnect success")
 
-		
+		}
+
+
+
+
+
 	}
 }
