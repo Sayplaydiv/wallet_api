@@ -25,10 +25,12 @@ func GetNewAddress(password string){
 		Id string     `id:"result"`
 	}
 
+
 	//json转struct
 	var bode_info address_result
 	json.Unmarshal(body,&bode_info)
 	NewAddress :=bode_info.Result
+
 
 	//存入数据库
 	if bode_info.Error == "" {

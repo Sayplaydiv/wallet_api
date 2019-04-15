@@ -3,10 +3,20 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/gin-contrib/sse" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/gin-gonic/gin" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/go-sql-driver/mysql" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/golang/protobuf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/jinzhu/gorm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/jinzhu/inflection" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/json-iterator/go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/mattn/go-isatty" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/modern-go/concurrent" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/modern-go/reflect2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/ugorji/go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/gopkg.in/gin-gonic/gin.v1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/gopkg.in/go-playground/validator.v8" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/gopkg.in/yaml.v2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/token-vesting-ui" vcs="Git" />
   </component>
 </project>
