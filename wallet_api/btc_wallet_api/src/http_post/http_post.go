@@ -40,7 +40,10 @@ func HttpPost(id string,method string,params []interface{}) []byte {
 			str_0 := strings.Replace(PostData_2, "\"To_address\":", "", -1)
 			str_1 := strings.Replace(str_0, ",\"Value\"", "", -1)
 			str_2 := strings.Replace(str_1, ":[{", ":[[{", -1)
-			PostData := strings.Replace(str_2, "},{", "}],{", -1)
+			str_3 := strings.Replace(str_2, "\"From_address\":", "", -1)
+			str_4 := strings.Replace(str_3, ",\"Vout_value\"", "", -1)
+
+			PostData := strings.Replace(str_4, "},{", "}],{", -1)
 
 			fmt.Println("请求的数据",method,":", PostData)
 
