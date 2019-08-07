@@ -1,8 +1,8 @@
-url=http://13.57.140.140:6666
+url=http://ip:6666
 fromAddress=0x579ad04e56ec0631d9031afaaf781d616fb25a3e
 toAddress=0xe5fC67f9E0E8021757847D67a6101743DcF51e0F
 passWord=wang812323
 ethFee=10000000000000000
-phoneList=18301908030,13651931118
+phoneList=手机号
 
 
